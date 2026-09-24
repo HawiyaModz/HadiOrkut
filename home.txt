@@ -1,0 +1,38 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Mendapatkan nilai variabel yang telah ditentukan
+    var id_user = "{{id_user}}";
+    var email_user = "{{email_user}}";
+    var nama_user = "{{nama_user}}";
+    var foto_profil = "{{foto_profil}}";
+    var saldo_user = "{{saldo_user}}";
+    var poin_member = "{{poin_member}}";
+    var nomor_telepon = "{{nomor_telepon}}";
+    var nama_membership = "{{nama_membership}}";
+    var jumlah_transaksi = "{{total_transaksi_sukses}}";
+
+    var google_tester = "new";
+
+    var body = {
+      k: "Member",
+      id_user: id_user,
+      nama_user: nama_user,
+      email_user: email_user,
+      nomor_telepon: nomor_telepon,
+      saldo_user: saldo_user,
+      nama_membership: nama_membership,
+      poin_member: poin_member,
+      jumlah_transaksi: jumlah_transaksi,
+    };
+    $.ajax({
+      url: "https://domainmu.com/orkut/index.php?action=Member",
+      type: "POST",
+      data: body,
+      success: function (data) {
+        console.log(data);
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+</script>
