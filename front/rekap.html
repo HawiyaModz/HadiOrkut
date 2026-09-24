@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>Rekap Transaksi</title>
+
+  <!-- Modern Libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // PPOB Secret Key (HARUS SAMA DENGAN YANG DIATUR DI ADMIN)
+    const ppobSecret = 'YOUR_PPOB_SECRET';
+    var baseUrl = 'https://domainmu.com/orkut/?action=';
+  </script>
+
+  <style>
+    :root {
+      --primary-color: {{warna_utama}};
+      --secondary-color: {{warna_terang}};
+      --bg-color: #f8f9fa;
+      --text-main: #2b2d42;
+      --text-muted: #8d99ae;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding-bottom: 80px;
+      overflow-x: hidden;
+      /* Prevent horizontal scroll */
+    }
+
+    /* Modern Header Section */
+    .header-section {
+      background: linear-gradient(135deg, {{warna_utama}} 0%, {{warna_terang}} 100%);
+      padding: 20px 20px 50px 20px;
+      /* Extra bottom padding for overlap */
+      border-bottom-left-radius: 35px;
+      border-bottom-right-radius: 35px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: -40px;
+      /* Negative margin for card overlap */
+      box-shadow: 0 10px 30px -10px rgba(67, 97, 238, 0.5);
+    }
+
+    /* Decorative Circles in Header */
+    .header-section::before,
+    .header-section::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      pointer-events: none;
+    }
+
+    .header-section::before {
+      width: 150px;
+      height: 150px;
+      top: -50px;
+      right: -30px;
+    }
+
+    .header-section::after {
+      width: 100px;
+      height: 100px;
+      bottom: 20px;
+      left: -20px;
+      opacity: 0.5;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn-back {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: transform 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-back:active {
+      transform: scale(0.95);
+    }
+
+    .header-title-box h5 {
+      font-weight: 700;
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .header-title-box p {
+      margin: 0;
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    /* Stats Grid */
+    .stats-container {
+      padding: 0 20px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 18px;
+      padding: 15px;
+      height: 100%;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(0, 0, 0, 0.02);
+      transition: transform 0.2s;
+    }
+
+    .stat-card:active {
+      transform: scale(0.98);
+    }
+
+    .stat-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      word-break: break-all;
+      line-height: 1.2;
+    }
+
+    /* Color Variants for Stats */
+    .st-blue .stat-icon {
+      background: #eff6ff;
+      color: #3b82f6;
+    }
+
+    .st-purple .stat-icon {
+      background: #fdf4ff;
+      color: #a855f7;
+    }
+
+    .st-red .stat-icon {
+      background: #fef2f2;
+      color: #ef4444;
+    }
+
+    .st-green .stat-icon {
+      background: #f0fdf4;
+      color: #22c55e;
+    }
+
+    /* Sticky Search & Filter */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(248, 249, 250, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 10px 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      margin-top: 15px;
+    }
+
+    .search-box {
+      background: white;
+      border-radius: 14px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      margin-bottom: 10px;
+      border: 1px solid #f1f3f5;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      width: 100%;
+      margin-left: 10px;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .form-select-custom {
+      border-radius: 12px;
+      font-size: 13px;
+      border: 1px solid #eee;
+      padding: 8px 12px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+      background-color: white;
+    }
+
+    .btn-icon-custom {
+      width: 40px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      background: white;
+      color: var(--primary-color);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    }
+
+    /* Transaction List - Mobile Optimized */
+    #listTransaksi {
+      padding: 10px 20px;
+    }
+
+    .list-group-item {
+      border: none;
+      border-radius: 16px !important;
+      margin-bottom: 12px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      padding: 16px !important;
+      transition: transform 0.2s;
+      /* Flex setup for the card container */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .list-group-item:active {
+      transform: scale(0.98);
+      background: #f8f9fa;
+    }
+
+    /* Layout for Left Side (Text) */
+    .tx-content {
+      flex: 1;
+      min-width: 0;
+      /* CRITICAL: Allows truncation inside flexbox */
+    }
+
+    /* Layout for Right Side (Price) */
+    .tx-meta {
+      flex-shrink: 0;
+      /* Prevents price from squishing */
+      text-align: right;
+      min-width: 85px;
+      /* Ensures enough space for price */
+    }
+
+    .item-title {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 3px;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-main);
+    }
+
+    .item-date {
+      font-size: 10px;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+    }
+
+    .item-desc {
+      font-size: 11px;
+      color: var(--text-main);
+      opacity: 0.8;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-price {
+      font-weight: 700;
+      font-size: 14px;
+      display: block;
+    }
+
+    .status-badge {
+      font-size: 9px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 5px;
+      display: inline-block;
+      letter-spacing: 0.5px;
+    }
+
+    /* Offcanvas Styling */
+    .offcanvas-custom {
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      height: auto !important;
+      max-height: 90vh;
+    }
+
+    .offcanvas-header-custom {
+      background: var(--primary-color);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+    }
+
+    .detail-box {
+      background: #f1f3f5;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      border-bottom: 1px dashed #eee;
+      padding-bottom: 5px;
+    }
+
+    .info-label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .info-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Loading */
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loading Overlay -->
+  <div id="load" class="loading-overlay" style="display:none;">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <!-- Header Section -->
+  <div class="header-section">
+
+    <div class="header-title-box mt-2">
+      <p>Laporan Keuangan</p>
+      <h5>Rekap Transaksi</h5>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-container">
+    <div class="row g-3">
+      <div class="col-6">
+        <div class="stat-card st-blue">
+          <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
+          <div>
+            <div class="stat-label">Penjualan</div>
+            <div class="stat-value" id="totalOmset">Rp 0</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="stat-card st-purple">
+          <div class="stat-icon"><i class="fas fa-receipt"></i></div>
+          <div>
+            <div class="stat-label">Transaksi</div>
+            <div class="stat-value" id="jumlahDataTransaksi">0</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="stat-card st-red">
+          <div class="stat-icon"><i class="fas fa-wallet"></i></div>
+          <div>
+            <div class="stat-label">Hutang</div>
+            <div class="stat-value" id="totalHutang">Rp 0</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="stat-card st-green">
+          <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+          <div>
+            <div class="stat-label">Keuntungan</div>
+            <div class="stat-value" id="totalKeuntungan">Rp 0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Filter Section -->
+  <div class="sticky-nav">
+    <div class="search-box">
+      <i class="fas fa-search text-muted"></i>
+      <input type="text" id="search-bar" onkeyup="searchList()" placeholder="Cari pelanggan atau produk...">
+    </div>
+
+    <div class="filter-group">
+      <select class="form-select form-select-custom w-100" id="dataDropdown">
+        <option value="hari-ini">Hari Ini</option>
+        <option value="minggu-ini">Minggu Ini</option>
+        <option value="bulan-ini">Bulan Ini</option>
+        <option value="custom">Custom</option>
+      </select>
+
+      <button onclick="displayDates()" id="btn-kalender" class="btn-icon-custom d-none">
+        <i class="fa fa-calendar"></i>
+      </button>
+
+      <button onclick="refreshData()" id="btn-refresh" class="btn-icon-custom">
+        <i class="fas fa-sync-alt"></i>
+      </button>
+    </div>
+
+    <!-- Custom Date Inputs -->
+    <div id="customDates" class="mt-3 p-3 bg-white rounded-4 shadow-sm border" style="display: none;">
+      <div class="mb-3">
+        <label class="small text-muted fw-bold">Dari Tanggal</label>
+        <input type="date" id="startDate" class="form-control form-control-lg rounded-3 mt-1">
+      </div>
+      <div class="mb-3">
+        <label class="small text-muted fw-bold">Sampai Tanggal</label>
+        <input type="date" id="endDate" class="form-control form-control-lg rounded-3 mt-1">
+      </div>
+      <button class="btn btn-primary w-100 rounded-pill py-2 fw-bold"
+        onclick="tampilkanDataTransaksi('custom')">Terapkan Filter</button>
+    </div>
+  </div>
+
+  <!-- Transaction List -->
+  <div class="mt-2">
+    <ul class="list-group list-unstyled" id="listTransaksi">
+      <!-- Data injected via JS -->
+    </ul>
+  </div>
+
+  <!-- Offcanvas Edit Transaksi -->
+  <div class="offcanvas offcanvas-bottom offcanvas-custom" tabindex="-1" id="editHargaJualModal">
+    <div class="offcanvas-header-custom">
+      <h6 class="m-0">Edit Transaksi</h6>
+    </div>
+    <div class="offcanvas-body">
+      <div class="detail-box">
+        <p class="fw-bold mb-0 text-primary" id="namaProduk"></p>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-muted">Nama Pembeli</label>
+        <input type="text" class="form-control rounded-3" id="namaPelanggan" placeholder="Nama pelangan">
+      </div>
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-muted">Harga Jual</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0">Rp</span>
+          <input type="tel" oninput="cekInputan(this)" onchange="cekInputan(this)" class="form-control rounded-end"
+            id="hargaJual">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-muted">Status Bayar</label>
+        <select class="form-select rounded-3" id="statusBayar">
+          <option value="lunas">Lunas</option>
+          <option value="hutang">Hutang</option>
+        </select>
+      </div>
+
+      <div class="d-grid gap-2 mt-4">
+        <button class="btn btn-primary rounded-pill py-2" id="saveData">Simpan Perubahan</button>
+        <button class="btn btn-light rounded-pill py-2 text-muted" data-bs-dismiss="offcanvas">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offcanvas Detail Transaksi -->
+  <div class="offcanvas offcanvas-bottom offcanvas-custom" tabindex="-1" id="detailTransaksiModal">
+    <div class="offcanvas-header-custom bg-white text-dark border-bottom">
+      <h6 class="m-0">Detail Transaksi</h6>
+      <p class="d-none" id="detailNomorPembayaran"></p>
+    </div>
+    <div class="offcanvas-body">
+      <div class="detail-box">
+        <p class="fw-bold text-primary mb-1" id="detailNamaProduk"></p>
+        <p class="small text-muted mb-0" id="detailCatatanTrx"></p>
+      </div>
+
+      <div class="px-2">
+        <div class="info-row">
+          <span class="info-label">Tanggal</span>
+          <span class="info-val" id="detailTanggalTrx"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Pelanggan</span>
+          <span class="info-val" id="detailNamaPelanggan"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Harga Jual</span>
+          <span class="info-val text-success" id="detailHargaJual"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Harga Modal</span>
+          <span class="info-val" id="detailHargaModal"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Keuntungan</span>
+          <span class="info-val text-primary" id="detailKeuntungan"></span>
+        </div>
+        <div class="info-row border-0">
+          <span class="info-label">Status</span>
+          <span class="info-val" id="detailStatusBayar"></span>
+        </div>
+      </div>
+
+      <div class="row g-2 mt-4">
+        <div class="col-4">
+          <button class="btn btn-outline-danger w-100 rounded-3 py-2" data-bs-dismiss="offcanvas" onclick="hapusData()">
+            <i class='fas fa-trash-alt mb-1 d-block'></i> <span style="font-size:10px">Hapus</span>
+          </button>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-outline-primary w-100 rounded-3 py-2" data-bs-dismiss="offcanvas"
+            onclick="editHargaJual()">
+            <i class='fas fa-edit mb-1 d-block'></i> <span style="font-size:10px">Edit</span>
+          </button>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-outline-info w-100 rounded-3 py-2" data-bs-dismiss="offcanvas"
+            onclick="lihatTransaksi()">
+            <i class='fas fa-print mb-1 d-block'></i> <span style="font-size:10px">Struk</span>
+          </button>
+        </div>
+      </div>
+      <button class="btn btn-light w-100 mt-3 rounded-pill text-muted" data-bs-dismiss="offcanvas">Tutup</button>
+    </div>
+  </div>
+
+  <script>
+    // Produk Kosong - Updated Styling
+    const dataNone = `
+        <div class="text-center animate__animated animate__fadeIn py-5">
+            <div class="mb-3">
+                <i class="fas fa-box-open fa-3x text-muted opacity-25"></i>
+            </div>
+            <p class="text-muted small">Belum ada data transaksi</p>
+        </div>
+    `
+    var id_user = '{{id_user}}'; // Pastikan ini di-render dengan benar dari backend
+    var nama_user = '{{nama_user}}'; // Pastikan ini di-render dengan benar dari backend
+    var foto_profil = '{{foto_profil}}'; // Pastikan ini di-render dengan benar dari backend
+    var filtered = 'hari-ini';
+
+    async function generateSignature(payload) {
+      const msgUint8 = new TextEncoder().encode(payload + ppobSecret);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function tampilkanDataTransaksi(filter) {
+      var listTransaksi = document.getElementById("listTransaksi");
+      var totalOmset = 0;
+      var totalHutang = 0;
+      var totalKeuntungan = 0;
+      var startDate, endDate;
+
+      // Logic Date Setting
+      if (filter === "hari-ini") {
+        $("#load").fadeIn();
+        document.getElementById("btn-kalender").classList.add("d-none");
+        var today = new Date();
+        startDate = formatDate(today) + " 00:00:00";
+        endDate = formatDate(today) + " 23:59:59";
+      } else if (filter === "minggu-ini") {
+        $("#load").fadeIn();
+        document.getElementById("btn-kalender").classList.add("d-none");
+        var sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        startDate = formatDate(sevenDaysAgo) + " 00:00:00";
+        endDate = formatDate(new Date()) + " 23:59:59";
+      } else if (filter === "bulan-ini") {
+        $("#load").fadeIn();
+        document.getElementById("btn-kalender").classList.add("d-none");
+        var firstDayOfMonth = new Date();
+        firstDayOfMonth.setDate(1);
+        startDate = formatDate(firstDayOfMonth) + " 00:00:00";
+        endDate = formatDate(new Date()) + " 23:59:59";
+      } else if (filter === "custom") {
+        var startDateInput = document.getElementById("startDate").value;
+        var endDateInput = document.getElementById("endDate").value;
+        if (startDateInput === "" || endDateInput === "") { return; }
+        startDate = startDateInput + " 00:00:00";
+        endDate = endDateInput + " 23:59:59";
+        $("#load").fadeIn();
+        document.getElementById("customDates").style.display = "none";
+        document.getElementById("btn-kalender").classList.remove("d-none");
+      }
+
+      const action = 'history';
+
+      $.ajax({
+        url: baseUrl + action + '&id_user=' + id_user + '&start_date=' + startDate + '&end_date=' + endDate,
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+          if (response.success) {
+            $("#load").fadeOut();
+            var transaksiArray = response.data;
+            listTransaksi.innerHTML = "";
+
+            if (transaksiArray.length === 0) {
+              listTransaksi.innerHTML = dataNone;
+            } else {
+              transaksiArray.forEach(function (transaksi) {
+                var status_bayar = transaksi.status.toLowerCase();
+                var {
+                  price, selling_price, price_user, buyer_user,
+                  created_at, product_name, buyer_sku_code, customer_name, customer_no,
+                  ref_id
+                } = transaksi;
+
+                // Use price_user if not 0, fallback to selling_price
+                var displayPrice = (price_user && parseFloat(price_user) !== 0) ? price_user : (selling_price || price || 0);
+                var displayBuyer = buyer_user || customer_name || customer_no || '-';
+
+                totalOmset += parseInt(displayPrice);
+                totalKeuntungan += parseInt(displayPrice) - parseInt(price);
+
+                // Set background color based on status. jika sukses, warna hijau, jika gagal merah, jika pending kuning
+                var bg = status_bayar === "sukses" ? "success" : (status_bayar === "gagal" ? "danger" : "warning");
+
+                // In this context, we'll assume status_bayar is lunas/hutang if we had that field,
+                // but for now let's use the status from DB
+                var RpHargaJual = formatRupiah(displayPrice);
+                var listItem = document.createElement("li");
+                listItem.className = "list-group-item animate__animated animate__fadeInUp";
+
+                listItem.innerHTML = `
+                      <div class="tx-content">
+                        <span class="item-title">${product_name || buyer_sku_code}</span>
+                        <span class="item-date"><i class="far fa-clock me-1"></i> ${created_at}</span>
+                        <span class="item-desc">
+                            <i class="far fa-user me-1"></i> ${displayBuyer} 
+                        </span>
+                      </div>
+                      <div class="tx-meta">
+                          <div class="item-price text-${bg}">${RpHargaJual}</div>
+                          <span class="status-badge bg-light text-${bg} border border-${bg}">
+                            ${status_bayar}
+                          </span>
+                      </div>
+                    `;
+
+                listTransaksi.appendChild(listItem);
+                listItem.onclick = function () {
+                  detailTransaksi(transaksi, filter);
+                };
+              });
+            }
+            document.getElementById("totalOmset").innerText = formatRupiah(totalOmset);
+            document.getElementById("totalKeuntungan").innerText = formatRupiah(totalKeuntungan);
+            document.getElementById("totalHutang").innerText = formatRupiah(totalHutang); // We don't have debt field in this DB schema yet
+            document.getElementById("jumlahDataTransaksi").innerText = `${transaksiArray.length}`;
+          }
+        },
+        error: function () { $("#load").fadeOut(); }
+      });
+    }
+
+    function displayDates() {
+      var el = document.getElementById("customDates");
+      if (el.style.display === "none") {
+        el.style.display = "block";
+      } else {
+        el.style.display = "none";
+      }
+    }
+
+    function refreshData() { tampilkanDataTransaksi(filtered); }
+
+    async function hapusData() {
+      var ref_id = document.getElementById("detailNomorPembayaran").innerText;
+      var filter = document.getElementById("dataDropdown").value;
+      const action = 'delete_transaction';
+
+      Swal.fire({
+        title: 'Hapus Data?',
+        text: "Data tidak bisa dikembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef233c',
+        cancelButtonColor: '#8d99ae',
+        confirmButtonText: 'Ya, Hapus'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $("#load").fadeIn();
+          $.ajax({
+            url: baseUrl + action + '&ref_id=' + ref_id,
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+              $("#load").fadeOut();
+              if (response.code === 200) {
+                Swal.fire({ icon: 'success', title: 'Terhapus', timer: 1500, showConfirmButton: false });
+                tampilkanDataTransaksi(filter);
+              }
+            }
+          });
+        }
+      });
+    }
+
+    function lihatTransaksi() {
+      var ref_id = document.getElementById("detailNomorPembayaran").innerText;
+      var url = `https://domainmu.com/orkut/script/detail.php?ref_id=${ref_id}&id_user=${id_user}&nama_user=${encodeURIComponent(nama_user)}&foto_profil=${encodeURIComponent(foto_profil)}`;
+      window.open(url, '_blank');
+    }
+
+    function cekInputan(input) {
+      var nilai = input.value.replace(/[^\d]/g, '');
+      var parsedValue = parseInt(nilai, 10);
+      if (!isNaN(parsedValue)) {
+        var formattedValue = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(parsedValue);
+        input.value = formattedValue.replace(/Rp|,00/g, '').replace(/\u00A0/g, ''); // Clean spaces
+      } else {
+        input.value = '';
+      }
+    }
+
+    async function editHargaJual() {
+      var offcanvas = new bootstrap.Offcanvas(document.getElementById('editHargaJualModal'));
+      offcanvas.show();
+
+      var nama_barang = document.getElementById("detailNamaProduk").innerText;
+      var ref_id = document.getElementById("detailNomorPembayaran").innerText;
+      var harga_jual = document.getElementById("detailHargaJual").innerText;
+      var nama_pelanggan = document.getElementById("detailNamaPelanggan").innerText;
+
+      var harga_jual_int = harga_jual.replace(/[^0-9]/g, '');
+
+      var filter = document.getElementById("dataDropdown").value;
+
+      document.getElementById("namaProduk").innerText = nama_barang;
+      document.getElementById("namaPelanggan").value = nama_pelanggan;
+      document.getElementById("hargaJual").value = new Intl.NumberFormat('id-ID').format(harga_jual_int);
+
+      document.getElementById("saveData").onclick = async function () {
+        var buyer_user = document.getElementById("namaPelanggan").value;
+        var price_user = document.getElementById("hargaJual").value.replace(/\D/g, "");
+
+        const action = 'update_transaction';
+        const body = JSON.stringify({
+          ref_id: ref_id,
+          buyer_user: buyer_user,
+          price_user: price_user
+        });
+        const token = Math.random().toString(36).substring(2, 15);
+        const payload = body + "|" + action + "|" + token;
+        const signature = await generateSignature(payload);
+
+        $("#load").fadeIn();
+        $.ajax({
+          url: baseUrl + action,
+          method: 'POST',
+          headers: {
+            'X-Signature': signature,
+            'X-Token': token
+          },
+          contentType: 'application/json',
+          data: body,
+          dataType: 'json',
+          success: function (response) {
+            $("#load").fadeOut();
+            if (response.code === 200) {
+              Swal.fire({ icon: 'success', title: 'Berhasil', timer: 1500, showConfirmButton: false });
+              offcanvas.hide();
+              tampilkanDataTransaksi(filter);
+            }
+          }
+        });
+      };
+    }
+
+    function detailTransaksi(transaksi, filter) {
+      var offcanvas = new bootstrap.Offcanvas(document.getElementById('detailTransaksiModal'));
+      offcanvas.show();
+
+      var displayPrice = (transaksi.price_user && parseFloat(transaksi.price_user) !== 0) ? transaksi.price_user : (transaksi.selling_price || transaksi.price || 0);
+      var displayBuyer = transaksi.buyer_user || transaksi.customer_name || transaksi.customer_no || '-';
+
+      document.getElementById("detailNomorPembayaran").innerText = transaksi.ref_id;
+      document.getElementById("detailNamaProduk").innerText = transaksi.product_name || transaksi.buyer_sku_code;
+      document.getElementById("detailCatatanTrx").innerText = transaksi.sn || 'Tidak ada catatan';
+      document.getElementById("detailTanggalTrx").innerText = transaksi.created_at;
+      document.getElementById("detailNamaPelanggan").innerText = displayBuyer;
+      document.getElementById("detailHargaJual").innerText = formatRupiah(displayPrice);
+      document.getElementById("detailHargaModal").innerText = formatRupiah(transaksi.selling_price);
+      document.getElementById("detailKeuntungan").innerText = formatRupiah(displayPrice - transaksi.selling_price);
+      document.getElementById("detailStatusBayar").innerText = transaksi.status;
+    }
+
+    function formatDate(date) {
+      var year = date.getFullYear();
+      var month = ("0" + (date.getMonth() + 1)).slice(-2);
+      var day = ("0" + date.getDate()).slice(-2);
+      return year + "-" + month + "-" + day;
+    }
+
+    document.getElementById("dataDropdown").addEventListener("change", function () {
+      filtered = this.value;
+      if (filtered === "custom") {
+        document.getElementById("customDates").style.display = "block";
+      } else {
+        document.getElementById("customDates").style.display = "none";
+        tampilkanDataTransaksi(filtered);
+      }
+    });
+
+    // Initial Load
+    tampilkanDataTransaksi(filtered);
+
+    function searchList() {
+      var input, filter, ul, li, i, txtValue;
+      input = document.getElementById("search-bar");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("listTransaksi");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+        txtValue = li[i].textContent || li[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          li[i].classList.remove("d-none");
+          li[i].classList.add("d-flex");
+        } else {
+          li[i].classList.remove("d-flex");
+          li[i].classList.add("d-none");
+        }
+      }
+    }
+
+    function formatRupiah(angka) {
+      var formatter = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+      });
+      return formatter.format(angka).replace(/IDR/g, "").trim();
+    }
+  </script>
+</body>
+
+</html>
