@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nominal Bebas</title>
+    <link href="https://fastly.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+    <style>
+        .ping {
+            --uib-size: 10rem;
+            --uib-speed: 2s;
+            --uib-color: #2196F3;
+            position: relative;
+            height: var(--uib-size);
+            width: var(--uib-size);
+        }
+
+        .ping::before,
+        .ping::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            background-color: var(--uib-color);
+            animation: pulse7132 var(--uib-speed) linear infinite;
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        .ping::after {
+            animation-delay: calc(var(--uib-speed) / -2);
+        }
+
+        @keyframes pulse7132 {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+        @import url("https://fastly.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #EDF1FC;
+        }
+
+        p {
+            margin: 0;
+            font-size: 12px
+        }
+
+        input {
+            border: none;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            width: 100%;
+            background-color: transparent;
+        }
+
+        a,
+        a:focus,
+        a:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        @-webkit-keyframes fadeEffect {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeEffect {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .my-bg {
+            background-color: #2196F3
+        }
+
+        .my-color {
+            color: #2196F3
+        }
+
+        .my-border {
+            border: 1px solid #2196F3;
+        }
+
+        .borad-5 {
+            border-radius: 5px
+        }
+
+        .borad-10 {
+            border-radius: 10px
+        }
+
+        .borad-15 {
+            border-radius: 15px
+        }
+
+        .my-shadow {
+            box-shadow: rgba(0, 0, 0, 0.15) 0 0 5px 1px;
+        }
+
+        .bg-white {
+            background-color: #fff !important
+        }
+
+        .text-white {
+            color: #fff
+        }
+
+        .f-11 {
+            font-size: 11px !important
+        }
+
+        .f-12 {
+            font-size: 12px !important
+        }
+
+        .f-14 {
+            font-size: 14px !important
+        }
+
+        .f-16 {
+            font-size: 16px !important
+        }
+
+        .f-18 {
+            font-size: 18px !important
+        }
+
+        .f-20 {
+            font-size: 20px !important
+        }
+
+        .f-22 {
+            font-size: 22px !important
+        }
+
+        .f-24 {
+            font-size: 24px !important
+        }
+
+        .f-26 {
+            font-size: 26px !important
+        }
+
+        .f-28 {
+            font-size: 28px !important
+        }
+
+        .fwb-5 {
+            font-weight: 500
+        }
+
+        .fwb-6 {
+            font-weight: 600
+        }
+
+        .op-7 {
+            opacity: 0.7
+        }
+
+        .bg-head {
+            background-color: #2196F3;
+            height: 5rem;
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1
+        }
+
+        .form-inp {
+            border: 1px solid #ededed;
+            font-size: 14px;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .form-inp:focus {
+            border: 1px solid #2196F3;
+        }
+
+        .btn-pil {
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .pil-active {
+            background-color: #2196F3;
+            color: #fff;
+            padding: 4px;
+            border-radius: 5px;
+            -webkit-animation: fadeEffect 1s;
+            animation: fadeEffect 1s;
+        }
+
+        .d-grid-1 {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1rem;
+        }
+
+        .d-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .bg-produk {
+            background-color: #fff;
+            padding: 12px;
+            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .bg-produk:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .15);
+        }
+
+        .box-list {
+            display: flex;
+            align-items: center;
+        }
+
+        .box-grid {
+            text-align: center;
+        }
+
+        .poinz {
+            pointer-events: none;
+        }
+
+        .bg-detail {
+            background-color: #2196F3;
+            padding: 12px;
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+        }
+
+        .btn-add {
+            border: 1px solid #cccccc;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 12px;
+            opacity: 0.7;
+            border-radius: 5px;
+            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+        }
+
+        .add-active {
+            border: 1px solid #2196F3;
+            pointer-events: none;
+        }
+
+        .accordion {
+            --bs-accordion-bg: transparent;
+        }
+
+        .pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .pill-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .pill-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* efek disable */
+        .produk-disable {
+            opacity: 0.5;
+            filter: grayscale(60%);
+            pointer-events: none;
+        }
+
+        /* lable gangguan */
+        .label-gangguan {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            color: white;
+            font-size: 10px;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    </style>
+
+    <script>
+        // LINK TOKO
+        const urlToko = window.location.origin;
+        // PPOB Secret Key (HARUS SAMA DENGAN YANG DIATUR DI ADMIN)
+        const ppobSecret = 'YOUR_PPOB_SECRET';
+
+        // we filter nothing, keep empty
+        const filterBrands = ["bebas nominal uang elektronik"];
+        const excludeBrands = [];
+
+        // API KEY & URL CHECK VALIDATION (Mitrascbo)
+        // Silakan sesuaikan Key dan URL di bawah ini sesuai akun Mitrascbo Anda.
+        const mitrascboUrl = 'https://cekid-mitrascbo.devdani.my.id';
+        const mitrascboKey = 'YOUR_API_KEY_HERE';
+
+        let cekConfig = {};
+        let validationCache = {};
+        let lastCheckedCode = '';
+        let lastCheckedNo = '';
+        async function loadCekConfig() {
+            try {
+                const res = await fetch('/api/cek-config?list=1');
+                const json = await res.json();
+                if (json.status) {
+                    cekConfig = json.data;
+                    console.log("CONFIG CEK ID:", cekConfig);
+                }
+            } catch (err) {
+                console.log("Gagal load config", err);
+            }
+        }
+        loadCekConfig();
+
+        //baseUrl
+        const mainUrl = window.location.origin;
+        const baseUrl = "/api/client?action=";
+
+        const iconPilihan = [
+            {
+                "signal": "https://ppobqita.my.id/assets/images/signal-1.png",
+                "contact": "https://ppobqita.my.id/assets/images/phone-book.png",
+                "scan": "https://ppobqita.my.id/assets/images/barcode.png",
+                "imgscan": "https://ppobqita.my.id/assets/images/imgscan.png",
+                "grid": "https://cdn-icons-png.flaticon.com/128/238/238910.png",
+                "list": "https://cdn-icons-png.flaticon.com/128/8867/8867520.png",
+                "image": "https://cdn-icons-png.flaticon.com/128/739/739198.png",
+                "noImage": "https://cdn-icons-png.flaticon.com/128/3781/3781609.png",
+                "search": "https://cdn-icons-png.flaticon.com/128/151/151773.png",
+                "close": "https://cdn-icons-png.flaticon.com/128/9684/9684650.png",
+            }
+        ];
+
+        // KATEGORI BEBAS
+        const urlKategori = [
+            {
+                "BEBAS": {
+                    "nama": "NOMINAL BEBAS",
+                    "gambar": "https://ppobqita.my.id/assets/icon/home/ewallet.png",
+                    "category": "NOMINAL BEBAS"
+                }
+            }
+        ];
+
+        const id_user = '{{id_user}}';
+        const nama_user = '{{nama_user}}';
+        const nama_membership = '{{nama_membership}}';
+    </script>
+</head>
+
+<body>
+
+    <section class="header">
+        <div class="bg-head"></div>
+        <div class="px-3 position-relative mt-3" style="z-index: 99;">
+            <div class="bg-white p-3 borad-5 shadow-sm">
+                <div class="d-flex align-items-center">
+                    <img src="https://cdn-icons-png.flaticon.com/128/9010/9010156.png" id="imgTop" width="30" class="borad-5">
+                    <p class="f-14 fwb-6 ms-2"><span id="textTop">Nominal Bebas</span></p>
+                </div>
+                <div class="mt-3">
+                    <p class="op-7 fwb-6 mb-1">Nomor Tujuan</p>
+                    <div class="d-flex align-items-center">
+                        <input type="text" class="form-inp {{hasil_kontak}}" id="nomoId"
+                            placeholder="Masukan nomor tujuan...">
+                        <input type="file" id="fileInput" style="display:none" accept="image/*"
+                            onchange="previewImage(event)">
+                        <img src="" width="38" id="imgGaleri" class="ms-3 my-bg p-1 borad-5" onclick="getGaleri()">
+                        <img src="" width="38" id="imgContact" class="ms-3 my-bg p-1 borad-5" onclick="getContact()">
+                    </div>
+                    <div id="ocrResult" class="pill-container mt-3"></div>
+                    <p id="ocrInfo" class="op-7 fwb-6 mb-1 d-none">Memeriksa gambar...</p>
+                </div>
+                <div class="mt-3">
+                    <p class="op-7 fwb-6 mb-1">Nominal Transaksi (Rp)</p>
+                    <div class="d-flex align-items-center">
+                        <input type="text" class="form-inp" id="nominalId"
+                            placeholder="Contoh: Rp 50.000">
+                    </div>
+                    <small class="text-muted d-block mt-1" style="font-size:10px;">
+                        * Minimal Rp 10.000, Maksimal Rp 1.000.000
+                    </small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="px-3 pt-3 sticky-top d-none" id="boxPilihan">
+        <div class="bg-white p-3 borad-5 shadow-sm">
+            <div class="d-block mb-3">
+                <div class="p-2 borad-5" style="background-color: #f3f4f9;">
+                    <div class="btn-pil pil-active" data-bs-toggle="modal" data-bs-target="#modalKategori" id="btn-kat" role="button" aria-label="Pilih Kategori" tabindex="0">
+                        <span id="textOperator">Pilih Kategori</span>
+                        <span id="iconOperator" class="ms-1"><i class="fa-solid fa-caret-down"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="dropdown">
+                    <p class="fwb-6 f-14 icon-pil mb-0" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span id="namaPil"></span>
+                        <i class="fa-solid fa-caret-down ms-1"></i>
+                    </p>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item f-14 fwb-6" id="pil-Termurah" onclick="rubahData('Termurah')">Biaya Terendah</li>
+                        <li class="dropdown-item f-14 fwb-6" id="pil-Termahal" onclick="rubahData('Termahal')">Biaya Tertinggi</li>
+                        <li class="dropdown-item f-14 fwb-6" id="pil-A-Z" onclick="rubahData('A-Z')">A - Z</li>
+                        <li class="dropdown-item f-14 fwb-6" id="pil-Z-A" onclick="rubahData('Z-A')">Z - A</li>
+                    </ul>
+                </div>
+                <div class="ms-3">
+                    <img src="" width="20" class="ms-3 icon-pil" id="imgTampilan" onclick="rubahTampilan()">
+                    <img src="" width="20" class="ms-3 icon-pil" id="imgGambar" onclick="rubahGambar()">
+                    <img src="" width="20" class="ms-3 icon-pil" id="imgPencarian" onclick="rubahPencarian()"
+                        data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true"
+                        aria-controls="flush-collapseOne">
+                </div>
+            </div>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body p-0 pt-3">
+                            <input type="search" class="form-inp f-12" placeholder="Cari Produk Nominal Bebas..." id="search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="p-3 position-relative" style="z-index: 0;" id="dataProduk">
+    </section>
+
+    <!-- Offcanvas for Entering Amount & Detailed Transaction Confirmation -->
+    <section class="offcanvas offcanvas-bottom p-3 h-auto"
+        style="background-color: transparent; border: none !important;" tabindex="-1" id="detailCanv"
+        aria-labelledby="detailCanvLabel" data-bs-focus="false">
+        <div class="px-3 bg-white" style="border-radius: 12px 12px 0 0 ;">
+            <div class="bg-detail mt-2">
+                <p class="f-14 text-center text-white font-semibold" id="detailCanvLabel">Form Nominal Bebas</p>
+            </div>
+        </div>
+        <div class="offcanvas-body bg-white pb-4" style="border-radius: 0 0 12px 12px;" id="bodyCanv">
+        </div>
+    </section>
+
+    <!-- Modal Kategori -->
+    <section class="modal fade" id="modalKategori" tabindex="-1" aria-labelledby="modalKategoriLabel"
+        data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content" style="max-height: 75% !important;">
+                <div class="my-bg p-3 text-white" style="border-radius: 5px 5px 0 0;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="fwb-5 f-14 mb-0" id="modalKategoriLabel">Pilihan Kategori</p>
+                        <p class="fwb-5 f-16 mb-0" id="iconSrcPil" onclick="rubahSrcPil()" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo" aria-expanded="true" aria-controls="flush-collapseTwo">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </p>
+                    </div>
+                    <div class="accordion accordion-flush" id="accordionFlushExampleTwo">
+                        <div class="accordion-item">
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExampleTwo">
+                                <div class="accordion-body p-0 pt-3">
+                                    <input type="search" class="form-inp f-12 bg-white" placeholder="Cari kategori..."
+                                        id="searchKategori" aria-label="Cari Kategori">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body p-3 d-grid-1" style="border-radius: 0 0 5px 5px;" id="isiPilihan">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://fastly.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://fastly.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script type="text/javascript">
+
+        // Load Awal
+        const loadAwal = `
+        <div class="text-center mt-3 animate__animated animate__fadeIn">
+            <p class="f-16 fwb-6 op-7">Masukan nomor tujuan terlebih dahulu...</p>
+        </div>
+        `;
+
+        // Loader
+        const loads = `
+        <div class="d-flex justify-content-center py-5 align-items-center">
+            <div class="ping"></div>
+        </div>
+        `;
+
+        // Nomor Salah
+        const noSalah = `
+        <div class="text-center animate__animated animate__fadeIn">
+            <img src="https://ppobqita.my.id/assets/images/produk-eror.jpg" class="w-100 borad-5 shadow-sm">
+            <p class="mt-3 f-16 fwb-6 op-7">Nomor yang dimasukan salah nih...</p>
+        </div>
+        `;
+
+        // Produk Kosong
+        const produkNone = `
+        <div class="text-center animate__animated animate__fadeIn">
+            <div class="p-4 bg-white borad-10 shadow-sm text-center">
+                <img src="https://cdn-icons-png.flaticon.com/128/7486/7486744.png" class="mb-3" width="80">
+                <p class="f-16 fwb-6 text-slate-800">Sepertinya kategori nominal bebas belum tersedia...</p>
+                <p class="f-12 text-slate-500 mt-1">Harap hubungi admin untuk menambahkan produk dengan Kategori "NOMINAL BEBAS".</p>
+            </div>
+        </div>
+        `;
+
+        let dataTampilan = 0;
+        let dataGambar = 0;
+        let dataPencarian = 0;
+        let dataProduk = null;
+        let urutanProduk = "Termurah";
+        let groupedProducts = {};
+        let dataKategori = null;
+        let dataDesc = null;
+        let gambarKategori = null;
+        let opera = "";
+
+        // Setup Buttons Icons
+        $("#imgContact").attr("src", iconPilihan[0].contact);
+        $("#imgGaleri").attr("src", iconPilihan[0].imgscan);
+
+        function getContact() {
+            window.location.href = urlToko + "/ambil_kontak";
+        }
+
+        function getGaleri() {
+            document.getElementById('fileInput').click();
+            document.getElementById('fileInput').value = '';
+            document.getElementById('ocrResult').innerHTML = '';
+        }
+
+        function previewImage(event) {
+            document.getElementById('ocrResult').innerHTML = '';
+            document.getElementById('ocrInfo').classList.remove('d-none');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                extractTextFromImage(e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function extractTextFromImage(imageSrc) {
+            Tesseract.recognize(
+                imageSrc,
+                'eng',
+                { logger: (m) => console.log(m) }
+            ).then(({ data: { text } }) => {
+                displayPillButtons(text);
+            }).catch(err => {
+                console.error(err);
+                document.getElementById('ocrResult').innerText = "OCR gagal dilakukan.";
+            });
+        }
+
+        function displayPillButtons(text) {
+            const ocrContainer = document.getElementById('ocrResult');
+            ocrContainer.innerHTML = '';
+            const regex = /\b\d{6,}(?:[-.\d]*)\b/g;
+            const numbers = text.match(regex);
+
+            if (numbers) {
+                numbers.forEach(number => {
+                    const pillButton = document.createElement('button');
+                    pillButton.className = 'pill-button';
+                    pillButton.innerText = number;
+                    pillButton.onclick = () => insertToInput(number);
+                    ocrContainer.appendChild(pillButton);
+                });
+            } else {
+                ocrContainer.innerText = 'Tidak ada nomor yang ditemukan.';
+            }
+
+            document.getElementById('ocrInfo').classList.add('d-none');
+        }
+
+        function insertToInput(number) {
+            const input = document.getElementById('nomoId');
+            input.value = number;
+            var event = new Event('change');
+            input.dispatchEvent(event);
+        }
+
+        // Format nominal input (Rupiah formatting)
+        $("#nominalId").on("input", function() {
+            let val = $(this).val().replace(/\D/g, "");
+            if (val === "") {
+                $(this).val("");
+            } else {
+                let formatted = new Intl.NumberFormat("id-ID").format(parseInt(val));
+                $(this).val("Rp " + formatted);
+            }
+        });
+
+        // Search Kategori Modal input
+        $("#searchKategori").on("input", function () {
+            var value = $(this).val().toLowerCase();
+            $("#isiPilihan .btn-add").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+        let dataSrcPil = 0;
+        function rubahSrcPil() {
+            if (dataSrcPil == 0) {
+                dataSrcPil = 1;
+                $("#iconSrcPil").html(`<i class="fa-solid fa-xmark"></i>`);
+            } else {
+                dataSrcPil = 0;
+                $("#iconSrcPil").html(`<i class="fa-solid fa-magnifying-glass"></i>`);
+                $("#searchKategori").val("");
+                $("#isiPilihan .btn-add").show();
+            }
+        }
+
+        // Load Operator
+        function loadOperator(nama) {
+            if (opera != nama) {
+                if (nama == "SALAH") {
+                    var dataSalah = $("#dataProduk").html();
+                    $("#textTop").html("");
+
+                    $("#imgTop").attr("src", iconPilihan[0].signal);
+                    $("#imgTop").addClass("my-bg p-1");
+
+                    $("#boxPilihan").addClass("d-none");
+
+                    if (dataSalah != noSalah) {
+                        $("#dataProduk").html(noSalah);
+                    }
+                } else {
+                    var v = urlKategori[0][nama];
+
+                    $("#textTop").html(v.nama);
+                    $("#imgTop").attr("src", v.gambar);
+                    $("#imgTop").removeClass("my-bg p-1");
+
+                    fetchBebasProducts(v.category, v.gambar);
+                }
+                opera = nama;
+            }
+        }
+
+        // Fetch & Load Data Bebas
+        async function fetchBebasProducts(category, gambar) {
+            gambarKategori = gambar;
+            $("#dataProduk").html(loads);
+            $("#boxPilihan").addClass("d-none");
+
+            const action = 'products';
+            const params = {
+                category: category,
+                membership: nama_membership,
+                source: 'OkeConnect'
+            };
+
+            const sortedKeys = Object.keys(params).sort();
+            const sortedParams = {};
+            sortedKeys.forEach(key => {
+                sortedParams[key] = params[key];
+            });
+
+            const queryString = new URLSearchParams(sortedParams).toString();
+            let url = `${baseUrl}${action}&${queryString}`;
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (res) {
+                    let data;
+                    try {
+                        data = typeof res === 'string' ? JSON.parse(res) : res;
+                    } catch (e) {
+                        console.error("Gagal memparsing JSON:", e, res);
+                        resGetData([], "", 0);
+                        return;
+                    }
+
+                    if (data && data.data && data.data.length > 0) {
+                        groupedProducts = {};
+                        let filteredProducts = data.data;
+
+                        // Filter brands if specified
+                        if (typeof filterBrands !== 'undefined' && filterBrands.length > 0) {
+                            filteredProducts = filteredProducts.filter(p => {
+                                const brandName = p.brand || '';
+                                return filterBrands.some(fb => brandName.toLowerCase() === fb.toLowerCase());
+                            });
+                        }
+
+                        // Exclude brands if specified
+                        if (typeof excludeBrands !== 'undefined' && excludeBrands.length > 0) {
+                            filteredProducts = filteredProducts.filter(p => {
+                                const brandName = p.brand || '';
+                                return !excludeBrands.some(eb => brandName.toLowerCase() === eb.toLowerCase());
+                            });
+                        }
+
+                        // Group products by brand
+                        filteredProducts.forEach(p => {
+                            let brand = p.brand || "Lainnya";
+                            if (!groupedProducts[brand]) groupedProducts[brand] = [];
+                            groupedProducts[brand].push(p);
+                        });
+
+                        let categories = Object.keys(groupedProducts).map(brand => {
+                            return { id_kategori: category, desc: brand, nama: brand };
+                        });
+
+                        $("#boxPilihan").removeClass("d-none");
+                        loopCat(categories);
+                    } else {
+                        resGetData([], "", 0);
+                    }
+                },
+                error: function (err) {
+                    console.error("Gagal mengambil data", err);
+                    resGetData([], "", 0);
+                }
+            });
+        }
+
+        function loopCat(data) {
+            dataKategori = data;
+            $("#isiPilihan").html("");
+
+            if (data.length <= 1) {
+                $("#iconOperator").html("");
+            } else {
+                $("#iconOperator").html(`<i class="fa-solid fa-caret-down"></i>`);
+            }
+            $.each(data, function (i, v) {
+                $("#isiPilihan").append(`
+                    <button type="button" class="btn-add" id="btd-${i}" onclick="getData('${i}')" data-bs-dismiss="modal" role="button" tabindex="0" aria-label="${v.nama}" style="width: 100%; text-align: left; background: none;">${v.nama}</button>
+                `);
+            });
+
+            defaultData();
+
+            // JIKA HANYA ADA 1 KATEGORI/BRAND, OTOMATIS LOAD TANPA MODAL
+            if (data.length === 1) {
+                getData('0');
+            } else if (data.length > 1) {
+                // Tampilkan modal kategori jika pilihan lebih dari satu
+                const modalEl = document.getElementById('modalKategori');
+                const myModal = new bootstrap.Modal(modalEl);
+                myModal.show();
+            }
+        }
+
+        function getData(i) {
+            var desc = dataKategori[i].desc;
+            var nama = dataKategori[i].nama;
+            var length = dataKategori.length;
+
+            $("#dataProduk").html(loads);
+            $("#textOperator").html(nama);
+            $(".btn-add").removeClass("add-active");
+            if (length == 1) {
+                $("#btn-kat").addClass("poinz");
+            } else {
+                $("#btn-kat").removeClass("poinz");
+            }
+            $("#btd-" + i).addClass("add-active");
+            $(".icon-pil").addClass("poinz");
+
+            let products = groupedProducts[desc] || [];
+            resGetData(products, desc, length);
+        }
+
+        function resGetData(data, desc, length) {
+            $(".btn-pil").removeClass("poinz");
+            $(".icon-pil").removeClass("poinz");
+            if (data == null || data.length == 0) {
+                $("#dataProduk").html(produkNone);
+            } else {
+                if (length == 1) {
+                    $("#btn-kat").addClass("poinz");
+                } else {
+                    $("#btn-kat").removeClass("poinz");
+                }
+                let x = (dataTampilan == 0) ? "d-grid-1" : "d-grid-2";
+                $("#dataProduk").html(`<div class="animate__animated animate__fadeIn ${x}" id="isiProduk"></div>`);
+                loopProduk(data, desc);
+
+                dataProduk = data;
+                dataDesc = desc;
+            }
+        }
+
+        function loopProduk(data, desc) {
+
+            console.log(data);
+            if (data.length == 0) {
+                $("#dataProduk").html(produkNone);
+                return;
+            }
+
+            // Sorting based on item price (administrative fee)
+            if (urutanProduk == "Termurah") {
+                data.sort((a, b) => {
+                    let priceA = parseInt(a.price || a.sell_price || 0);
+                    let priceB = parseInt(b.price || b.sell_price || 0);
+                    return priceA - priceB;
+                });
+            } else if (urutanProduk == "Termahal") {
+                data.sort((a, b) => {
+                    let priceA = parseInt(a.price || a.sell_price || 0);
+                    let priceB = parseInt(b.price || b.sell_price || 0);
+                    return priceB - priceA;
+                });
+            } else if (urutanProduk == "A-Z") {
+                data.sort((a, b) => a.product_name.localeCompare(b.product_name));
+            } else if (urutanProduk == "Z-A") {
+                data.sort((a, b) => b.product_name.localeCompare(a.product_name));
+            }
+
+            $("#isiProduk").html("");
+
+            let box = (dataTampilan == 0) ? "box-list" : "box-grid";
+            let margin = (dataTampilan == 0) ? "me-3" : "mb-3";
+            let block = (dataGambar == 0) ? "" : "d-none";
+
+            $.each(data, function (i, item) {
+                var nama_produk = item.product_name;
+                var sell_price = parseInt(item.price || item.sell_price || 0);
+                var display_price = formatRupiah(sell_price);
+                var buyer_status = item.buyer_product_status;
+                var seller_status = item.seller_product_status;
+
+                const isGangguan = (buyer_status == 0 || seller_status == 0);
+                const clickAttr = isGangguan
+                    ? ''
+                    : `onclick="openDetailForm('${i}')" role="button" tabindex="0" aria-label="${nama_produk}"`;
+
+                const classGangguan = isGangguan ? 'produk-disable' : '';
+                const labelGangguan = isGangguan ? `<div class="label-gangguan">Gangguan</div>` : '';
+
+                let subText = `Bebas nominal transfer / topup`;
+
+                $("#isiProduk").append(`
+                    <div class="bg-produk animate__animated animate__flipInX position-relative ${classGangguan}" 
+                        id="bg-prod-${i}" ${clickAttr}>
+
+                        ${labelGangguan}
+
+                        <div class="box-utama ${box}">
+                            <img src="${gambarKategori}" class="box-img borad-5 ${margin} ${block}" width="40" onerror="this.src='https://cdn-icons-png.flaticon.com/128/9010/9010156.png'">
+
+                            <div class="text-start">
+                                <p class="fwb-6 mb-1">${nama_produk}</p>
+                                <p class="fwb-6 op-7" style="font-size:10px;">${subText}</p>
+                                <p class="fwb-6 f-14 mb-0 my-color">${display_price}</p>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+        }
+
+        function findProvider(productName) {
+            const nama = (productName || '').toLowerCase();
+            console.log("Mencari provider untuk:", nama);
+            for (const kategori in cekConfig) {
+                const list = cekConfig[kategori]?.list || [];
+                for (const item of list) {
+                    const kode = (item.kode || '').toLowerCase().trim();
+                    const name = (item.name || '').toLowerCase().trim();
+
+                    // cocokkan nama provider
+                    if (
+                        nama.includes(name) ||
+                        nama.includes(kode)
+                    ) {
+                        console.log("MATCH:", kategori, item);
+                        return {
+                            kategori,
+                            ...item
+                        };
+                    }
+                }
+            }
+            return null;
+        }
+
+         function cekId(provider, no, zone = '') {
+            // Tentukan kode e-wallet (e.g. dana, gopay, ovo, shopeepay, linkaja, isaku, grab, gopaydriver)
+            // fallback menggunakan provider.kode atau mencocokkan kata kunci
+            let ewalletCode = (provider.kode || '').toLowerCase().trim();
+            if (ewalletCode === 'shopee' || ewalletCode === 'shopepay' || ewalletCode === 'shopeepay') {
+                ewalletCode = 'shopeepay';
+            } else if (ewalletCode === 'link') {
+                ewalletCode = 'linkaja';
+            }
+
+            if (lastCheckedCode === ewalletCode && lastCheckedNo === no) {
+                console.log("Pengecekan diabaikan karena provider dan nomor tujuan sama.");
+                const cacheKey = `${ewalletCode}_${no}`;
+                if (validationCache[cacheKey]) {
+                    $("#nickname").html(validationCache[cacheKey]);
+                }
+                return;
+            }
+            lastCheckedCode = ewalletCode;
+            lastCheckedNo = no;
+
+            const cacheKey = `${ewalletCode}_${no}`;
+            if (validationCache[cacheKey]) {
+                console.log("Using cached validation result for key:", cacheKey);
+                $("#nickname").html(validationCache[cacheKey]);
+                return;
+            }
+
+            console.log("Cek ID Mitrascbo dengan", provider, no, zone);
+            
+            const url = `${mitrascboUrl}/trueid/ewallet/${ewalletCode}/?hp=${encodeURIComponent(no)}&key=${encodeURIComponent(mitrascboKey)}`;
+            
+            console.log("Hitting validation url:", url);
+            
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) throw new Error("HTTP error " + res.status);
+                    return res.json();
+                })
+                .then(data => {
+                    console.log("Mitrascbo Response:", data);
+                    
+                    if (data && data.error_msg) {
+                        $("#nickname").html(`<span class="text-danger">${data.error_msg}</span>`);
+                        return;
+                    }
+                    
+                    const name = data.name || data.nickname || (data.result && data.result.status === "200" ? "Berhasil (Nama tidak tersedia)" : null);
+                    
+                    if (name) {
+                        const formattedName = decodeURIComponent(name).trim();
+                        validationCache[cacheKey] = formattedName;
+                        $("#nickname").html(formattedName);
+                    } else {
+                        $("#nickname").html("ID/Nomor tidak ditemukan...");
+                    }
+                })
+                .catch(err => {
+                    console.log("Validation Error:", err);
+                    $("#nickname").html("Gagal cek ID / Gangguan...");
+                });
+        }
+
+        // Open transaction detail form
+        function openDetailForm(i) {
+            const item = dataProduk[i];
+            const sell_price = parseInt(item.price || item.sell_price || 0);
+            const no = $("#nomoId").val();
+            const nominalStr = $("#nominalId").val() || "";
+            const nominal = parseInt(nominalStr.replace(/\D/g, "")) || 0;
+
+            const is_no_valid = (no && no.trim() !== "");
+            const is_nominal_valid = (nominal >= 10000 && nominal <= 1000000);
+            const is_valid = is_no_valid && is_nominal_valid;
+
+            let error_msg = "";
+            if (!is_no_valid && !is_nominal_valid) {
+                error_msg = "Nomor tujuan kosong & nominal tidak valid!";
+            } else if (!is_no_valid) {
+                error_msg = "Nomor tujuan kosong!";
+            } else if (!is_nominal_valid) {
+                error_msg = "Nominal tidak valid (Min. Rp 10.000, Max. Rp 1.000.000)!";
+            }
+
+            const total_payment = nominal + sell_price;
+
+            let btnSubmit = "";
+            if (is_valid) {
+                btnSubmit = `
+                    <div class="w-100 my-bg p-2 borad-5 ms-3 text-center text-white font-semibold" 
+                        onclick="prosesBeli('${item.buyer_sku_code}', ${sell_price})" 
+                        id="btnSubmitTrx" style="cursor:pointer;" role="button" tabindex="0">
+                        Lanjutkan
+                    </div>
+                `;
+            } else {
+                btnSubmit = `
+                    <div class="w-100 bg-secondary p-2 borad-5 ms-3 text-center text-white font-semibold poinz" 
+                        id="btnSubmitTrx" style="cursor:not-allowed; opacity: 0.5;" role="button" tabindex="0">
+                        Lanjutkan
+                    </div>
+                `;
+            }
+
+            let warning_section = "";
+            if (!is_valid) {
+                warning_section = `
+                    <div class="p-2 mb-3 bg-danger bg-opacity-10 border border-danger border-opacity-20 rounded text-danger text-center font-semibold f-12 animate__animated animate__shakeX">
+                        <i class="fa-solid fa-triangle-exclamation me-1"></i> ${error_msg}
+                    </div>
+                `;
+            }
+
+            // HTML form
+            $("#bodyCanv").html(`
+                <div class="text-center">
+                    <img src="${gambarKategori}" onerror="this.src='https://cdn-icons-png.flaticon.com/128/9010/9010156.png'"
+                        class="borad-5 shadow-sm" width="55">
+                    <div class="mt-2">
+                        <p class="fwb-6 f-16 text-slate-800">${item.product_name}</p>
+                    </div>
+                </div>
+
+                <div class="p-3 my-3 bg-light border border-slate-200 borad-10">
+                    <label class="fwb-6 text-slate-700 f-12 mb-1">Nominal Transaksi (Rp):</label>
+                    <div class="bg-white p-2 borad-5 border d-flex align-items-center mb-1">
+                        <span class="fwb-6 text-slate-500 me-2">Rp</span>
+                        <input type="text" id="inputAmountDisplay" class="fwb-6 text-slate-800 w-100" 
+                            value="${nominal > 0 ? new Intl.NumberFormat('id-ID').format(nominal) : '-'}" readonly style="font-size:16px; background: transparent;">
+                    </div>
+                </div>
+
+                ${warning_section}
+
+                <div class="d-flex justify-content-between py-2 border-bottom border-dashed">
+                    <p class="fwb-5 op-7">Tujuan / No. Rek:</p>
+                    <p class="fwb-6">${is_no_valid ? no : '<span class="text-danger">Belum diisi</span>'}</p>
+                </div>
+
+                <div class="d-flex justify-content-between py-2 border-bottom border-dashed">
+                    <p class="fwb-5 op-7">Nama Pelanggan:</p>
+                    <p class="fwb-6" id="nickname">Loading...</p>
+                </div>
+
+                <div class="d-flex justify-content-between py-2 border-bottom border-dashed">
+                    <p class="fwb-5 op-7">Biaya Tambahan:</p>
+                    <p class="fwb-6 text-success">${formatRupiah(sell_price)}</p>
+                </div>
+
+                <div class="d-flex justify-content-between py-2 border-bottom">
+                    <p class="fwb-5 op-7">Total Bayar:</p>
+                    <p class="fwb-6 f-16 text-primary" id="textTotalPayment">${is_valid ? formatRupiah(total_payment) : '-'}</p>
+                </div>
+
+                <div class="mt-4">
+                    <div class="d-flex align-items-center">
+                        <div class="w-100 bg-secondary p-2 borad-5 text-center text-white" 
+                            data-bs-dismiss="offcanvas" style="cursor:pointer;" role="button" tabindex="0">
+                            Kembali
+                        </div>
+                        ${btnSubmit}
+                    </div>
+                </div>  
+            `);
+
+            // Open offcanvas programmatically
+            const myOffcanvas = new bootstrap.Offcanvas(document.getElementById('detailCanv'));
+            myOffcanvas.show();
+
+            const provider = findProvider(item.product_name);
+            if (provider && no != "") {
+                cekId(provider, no);
+            } else {
+                $("#nickname").html("Tidak support cek ID / Kosong");
+            }
+        }
+
+        async function prosesBeli(sku, adminFee) {
+            const nominalStr = $("#nominalId").val() || "";
+            const amountVal = parseInt(nominalStr.replace(/\D/g, "")) || 0;
+            const no = $("#nomoId").val();
+
+            if (!no) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Tujuan Kosong',
+                    text: 'Silahkan isi nomor tujuan / ID pelanggan terlebih dahulu!',
+                });
+                return;
+            }
+
+            if (amountVal < 10000 || amountVal > 1000000) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Nominal Tidak Valid',
+                    text: 'Nominal transaksi harus berkisar antara Rp 10.000 dan Rp 1.000.000!',
+                });
+                return;
+            }
+
+            // Tutup modal detail jika terbuka agar tidak terjadi focus trapping pada input PIN
+            var myOffcanvas = document.getElementById('detailCanv');
+            var bsOffcanvas = bootstrap.Offcanvas.getInstance(myOffcanvas);
+            if (bsOffcanvas) {
+                bsOffcanvas.hide();
+            }
+
+            // Minta PIN Transaksi dari user
+            const { value: pinUser } = await Swal.fire({
+                title: 'PIN TRANSAKSI',
+                html: `
+                    <p class="f-12 text-muted mb-3">Silakan masukkan PIN Transaksi Anda untuk melanjutkan pembayaran.</p>
+                    <input type="password" id="swal-pin-user" class="form-control text-center fwb-6 mb-3" 
+                        placeholder="••••••" maxlength="6" inputmode="numeric" pattern="[0-9]*" 
+                        style="font-size: 24px; letter-spacing: 10px; width: 200px; margin: 0 auto; border-radius: 8px;">
+                    <p class="f-12 text-muted">Belum membuat PIN? <a href="${urlToko}/akun/?page=pin" target="_blank" style="color: #2196F3; font-weight: 600; text-decoration: underline;">Buat sekarang.</a></p>
+                `,
+                showCancelButton: true,
+                cancelButtonText: 'Batal',
+                confirmButtonText: 'Konfirmasi',
+                confirmButtonColor: '#2196F3',
+                focusConfirm: false,
+                didOpen: () => {
+                    setTimeout(() => {
+                        const pinInput = document.getElementById('swal-pin-user');
+                        if (pinInput) {
+                            pinInput.focus();
+                        }
+                    }, 100);
+                },
+                preConfirm: () => {
+                    const pin = document.getElementById('swal-pin-user').value;
+                    if (!pin) {
+                        Swal.showValidationMessage('PIN tidak boleh kosong!');
+                        return false;
+                    }
+                    if (pin.length < 4) {
+                        Swal.showValidationMessage('PIN minimal 4 digit!');
+                        return false;
+                    }
+                    if (!/^\d+$/.test(pin)) {
+                        Swal.showValidationMessage('PIN harus berupa angka!');
+                        return false;
+                    }
+                    return pin;
+                }
+            });
+
+            if (!pinUser) {
+                return; // Batalkan transaksi jika user menekan batal
+            }
+
+            // Tampilkan loading animation
+            Swal.fire({
+                title: 'Sedang Memproses...',
+                text: 'Mohon tunggu transaksi Anda sedang diproses.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            const action = 'transaction';
+            const token = Math.random().toString(36).substring(2, 15);
+
+            const bodyData = {
+                buyer_sku_code: sku,
+                customer_no: no,
+                id_user: id_user,
+                nama_user: nama_user,
+                cmd: 'topup',
+                membership: nama_membership,
+                amount: amountVal,
+                pin_user: pinUser
+            };
+
+            const payload = JSON.stringify(bodyData);
+            const msgUint8 = new TextEncoder().encode(payload + "|" + action + "|" + token + ppobSecret);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const signature = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+            fetch(`${baseUrl}${action}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Signature": signature,
+                    "x-Token": token
+                },
+                body: payload
+            })
+            .then(res => res.json())
+            .then(res => {
+                console.log("Response:", res);
+
+                // Tutup offcanvas
+                var myOffcanvas = document.getElementById('detailCanv');
+                var bsOffcanvas = bootstrap.Offcanvas.getInstance(myOffcanvas);
+                if (bsOffcanvas) {
+                    bsOffcanvas.hide();
+                }
+
+                if (res.data && res.data.ref_id) {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Transaksi Berhasil!',
+                        text: `ID Transaksi: ${res.data.ref_id}`,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = `${mainUrl}/script/detail.php?ref_id=${res.data.ref_id}&bukaolshop_shortcode=true`;
+                    }, 400);
+
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Transaksi Gagal',
+                        text: res.data ? res.data.message : (res.error || 'Terjadi kesalahan saat memproses transaksi.'),
+                    });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Kesalahan Sistem',
+                    text: 'Gagal terhubung ke server. Silakan coba kembali.',
+                });
+            });
+        }
+
+        // Search inputs
+        $("#search").on("input", function () {
+            var value = $(this).val().toLowerCase();
+            $("#isiProduk .bg-produk").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        // Toggle layout list / grid
+        function rubahTampilan() {
+            if (dataTampilan == 0) {
+                dataTampilan = 1;
+                $("#imgTampilan").attr("src", iconPilihan[0].grid);
+                $("#isiProduk").removeClass("d-grid-1").addClass("d-grid-2");
+                $(".box-utama").removeClass("box-list").addClass("box-grid");
+                $(".box-img").removeClass("me-3").addClass("mb-3");
+            } else {
+                dataTampilan = 0;
+                $("#imgTampilan").attr("src", iconPilihan[0].list);
+                $("#isiProduk").removeClass("d-grid-2").addClass("d-grid-1");
+                $(".box-utama").removeClass("box-grid").addClass("box-list");
+                $(".box-img").removeClass("mb-3").addClass("me-3");
+            }
+        }
+
+        // Toggle load display images
+        function rubahGambar() {
+            if (dataGambar == 0) {
+                dataGambar = 1;
+                $("#imgGambar").attr("src", iconPilihan[0].noImage);
+                $(".box-img").addClass("d-none");
+            } else {
+                dataGambar = 0;
+                $("#imgGambar").attr("src", iconPilihan[0].image);
+                $(".box-img").removeClass("d-none");
+            }
+        }
+
+        function rubahPencarian() {
+            if (dataPencarian == 0) {
+                dataPencarian = 1;
+                $("#imgPencarian").attr("src", iconPilihan[0].close);
+            } else {
+                dataPencarian = 0;
+                $("#imgPencarian").attr("src", iconPilihan[0].search);
+            }
+        }
+
+        function rubahData(nama) {
+            $(".dropdown-item").removeClass("my-color");
+            $("#pil-" + nama).addClass("my-color");
+            $("#namaPil").html(nama);
+            urutanProduk = nama;
+            resGetData(dataProduk, dataDesc, dataKategori ? dataKategori.length : 0);
+        }
+
+        function defaultData() {
+            dataTampilan = 0;
+            dataGambar = 0;
+            dataPencarian = 0;
+            urutanProduk = "Termurah";
+
+            $(".dropdown-item").removeClass("my-color");
+            $("#pil-" + urutanProduk).addClass("my-color");
+            $("#namaPil").html(urutanProduk);
+
+            $("#search").val("");
+            $("#flush-collapseOne").removeClass("show");
+
+            $("#imgTampilan").attr("src", iconPilihan[0].list);
+            $("#imgGambar").attr("src", iconPilihan[0].image);
+            $("#imgPencarian").attr("src", iconPilihan[0].search);
+        }
+
+        function formatRupiah(angka) {
+            var formatter = new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0,
+            });
+            return formatter.format(angka).replace(/IDR/g, "Rp ");
+        }
+
+        // STARTUP
+        defaultData();
+        const firstKey = Object.keys(urlKategori[0])[0];
+        loadOperator(firstKey);
+
+        // --- HISTORY API LOGIC FOR OFFCANVAS ---
+        let isBackButtonPressed = false;
+        $(".offcanvas").on("show.bs.offcanvas", function () {
+            isBackButtonPressed = false;
+            window.history.pushState({ offcanvas: true }, "");
+        });
+
+        $(".offcanvas").on("hide.bs.offcanvas", function (e) {
+            if (!isBackButtonPressed) {
+                window.history.back();
+            }
+            isBackButtonPressed = false;
+        });
+
+        window.addEventListener("popstate", function (event) {
+            isBackButtonPressed = true;
+            var offcanvasList = document.querySelectorAll(".offcanvas.show");
+            if (offcanvasList.length > 0) {
+                offcanvasList.forEach(function (el) {
+                    var bsOffcanvas = bootstrap.Offcanvas.getInstance(el);
+                    if (bsOffcanvas) {
+                        bsOffcanvas.hide();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
