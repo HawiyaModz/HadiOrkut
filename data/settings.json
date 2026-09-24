@@ -1,0 +1,14 @@
+{
+  "global_margin": "0",
+  "okeconnect_member_id": "",
+  "okeconnect_password": "",
+  "okeconnect_pin": "",
+  "ppob_secret": "",
+  "token_bo": "",
+  "telegram_bot_token_ppob": "",
+  "telegram_chat_id": "",
+  "token_fonnte": "",
+  "digiflazz_webhook_secret": "",
+  "okeconnect_connected": "0",
+  "okeconnect_last_sync": ""
+}
